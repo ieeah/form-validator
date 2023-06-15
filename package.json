@@ -1,6 +1,6 @@
 {
   "name": "form-validator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "FormValidator.js",
   "repository": {
@@ -19,5 +19,11 @@
     "validatinator"
   ],
   "author": "ieeah",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "validatinator": "^2.0.8"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
 }
