@@ -1,0 +1,23 @@
+{
+  "name": "form-validator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "FormValidator.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ieeah/form-validator.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "form",
+    "validation",
+    "form-validation",
+    "laravel",
+    "validation",
+    "validatinator"
+  ],
+  "author": "ieeah",
+  "license": "MIT"
+}
