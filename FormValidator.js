@@ -22,7 +22,6 @@ export class FormValidator {
     }
 
     this.#config = config;
-    this.#messages = msgs;
     this.#formSelector = Object.keys(this.#config)[0];
     this.#fields = Object.keys(this.config[this.formSelector]);
   }
@@ -114,7 +113,6 @@ export class FormValidator {
       errors: ERRORS,
       valid: VALID,
       invalid: !VALID,
-      originalState: state,
     };
 
     this.#errors = NEW_STATE.errors;
