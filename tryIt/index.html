@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Validator test</title>
+  </head>
+  <body>
+    <div id="form">
+      <label for="name">Name</label>
+      <input type="text" id="name" />
+    </div>
+
+    <script type="module">
+     // for this test to work you need to import the validatinator library in the FormValidator.js file from a relative path (to node_modules)
+      import { FormValidator } from "../FormValidator.js";
+      const form = document.getElementById("form");
+      const input = document.getElementById("name");
+      const config = {
+        "#form": {
+          "#name": "minLength:3",
+        },
+      };
+      const validator = new FormValidator(config);
+      const handleValidation = async () => {
+        const result = await validator.validate();
+        console.log(result);
+      };
+      input.addEventListener("change", handleValidation);
+    </script>
+  </body>
+</html>

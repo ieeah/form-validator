@@ -11,10 +11,19 @@ export class FormValidator {
   #validator;
 
   constructor(config, msgs) {
+    
+    const hasNewMessages = msgs && Object.keys(msgs).length > 0;
+
+    if (hasNewMessages) {
+      this.#validator = new Validatinator(config, msgs);
+      this.#messages = msgs;
+    } else {
+      this.#validator = new Validatinator(config);
+    }
+
     this.#config = config;
     this.#messages = msgs;
     this.#formSelector = Object.keys(this.#config)[0];
-    this.#validator = new Validatinator(this.#config, this.#messages);
     this.#fields = Object.keys(this.config[this.formSelector]);
   }
 
@@ -74,6 +83,14 @@ export class FormValidator {
     this.#fields = fields;
   }
 
+  get messages() {
+    return this.#messages;
+  }
+
+  set messages(messages) {
+    this.#messages = messages;
+  }
+
   getErrors(state) {
     const errors = {};
     this.#fields.forEach((field) => {
@@ -88,10 +105,18 @@ export class FormValidator {
 
   async validate() {
     const state = await this.validator.validate(this.#formSelector);
+    const ERRORS = this.getErrors(state);
+    const VALID = Object.values(ERRORS).every((error) => error.length === 0);
+
     const NEW_STATE = {
-      ...state,
-      errors: this.getErrors(state),
+      fieldsConfiguration: state.formFieldConfigs,
+      results: state.results,
+      errors: ERRORS,
+      valid: VALID,
+      invalid: !VALID,
+      originalState: state,
     };
+
     this.#errors = NEW_STATE.errors;
     this.#results = NEW_STATE.results;
     this.#valid = NEW_STATE.valid;

@@ -13,6 +13,7 @@ I created this library just to make it easier for me to use the validatinator pa
 - [Strings Syntaxes](#syntaxes)
   - [Rules](#rules)
   - [Rules Strings](#rules-string)
+- [Example](#examples)
 - [License](#license)
 
 ## Installation
@@ -55,7 +56,7 @@ const config = {
   },
 };
 
-const messages = {
+const overrideMessages = {
   ruleName: "messages",
   ruleName: "messages",
 };
@@ -68,11 +69,31 @@ Once created, you can call the validate method on the validator object everytime
 
 The validate method returns a promise which resolves to an object containing few properties which the most important are:
 
-- `valid`: a boolean value which indicates if the validation was successful or not
+- `valid`|`invalid`: a boolean value which indicates if the validation was successful or not
 
 - `errors`: an object containing the errors messages resulted from the validation for each input
 
+  ```javascript
+  {
+    inputQuerySelector: ["error message 1", "error message 2"],
+    inputQuerySelector: ["error message 1", "error message 2"],
+  }
+  ```
+
 - `results`: an object containing the results of the validation for each rule on each input
+
+  ```javascript
+  {
+    inputQuerySelector: {
+      rule: true,
+      rule: false,
+    },
+    inputQuerySelector: {
+      rule: true,
+      rule: false,
+    },
+  }
+  ```
 
 I suggest using a wrapper function to handle the validation, like this:
 
@@ -193,6 +214,64 @@ The rules string is a string containing the rules to be applied to the input, se
 const nameInputRules = "required|alphaDashNum|betweenLength:2,10";
 const emailInputRules = "required|email";
 ```
+
+## Example
+  
+  ```javascript
+  import { FormValidator } from "form-validator";
+
+  const keepGoing = () => {
+    // do something if the validation is successful
+  }
+
+  const printErrors = (errors) => {
+    // do something if the validation fails
+  }
+
+  const config = {
+    "#form": {
+      "#name": "required|minLength:2|alpha",
+      "#email": "required|email",
+    }
+  }
+
+  const newMessages = {
+    required: "This field is required",
+    minLength: "This field must have at least 2 characters",
+    alpha: "This field must contain only alphabetic characters",
+    email: "This field must be a valid email address",
+  }
+
+  const validator = new FormValidator(config, newMessages);
+
+  const handleValidation = async () => {
+    const state = await validator.validate();
+
+    if (state.valid) {
+      // do something if the validation is successful
+      keepGoing();
+    } else {
+      // do something if the validation fails
+      printErrors(state.errors);
+    }
+  }
+
+  // validation during typing
+  const nameInput = document.querySelector("#name");
+  const emailInput = document.querySelector("#email");
+
+  nameInput.addEventListener("input", handleValidation);
+  emailInput.addEventListener("input", handleValidation);
+
+  // validation on submit
+  const form = document.querySelector("#form");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    handleValidation();
+  });
+
+  ```
 
 ## License
 
