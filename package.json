@@ -1,6 +1,6 @@
 {
   "name": "form-validator-class",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A small utility class for form validation, it just wraps the Validatinator package.",
   "main": "FormValidator.js",
   "repository": {
