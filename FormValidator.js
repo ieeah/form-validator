@@ -1,4 +1,6 @@
-import { Validatinator } from "validatinator";
+// import { Validatinator } from "validatinator"; // dev-environment
+import { Validatinator } from "./node_modules/validatinator/dist/lib/validatinator.js"; // test-environment
+
 
 export class FormValidator {
   #config;
@@ -11,7 +13,7 @@ export class FormValidator {
   #validator;
 
   constructor(config, msgs) {
-    
+
     const hasNewMessages = msgs && Object.keys(msgs).length > 0;
 
     if (hasNewMessages) {
@@ -22,8 +24,8 @@ export class FormValidator {
     }
 
     this.#config = config;
-    this.#formSelector = Object.keys(this.#config)[0];
-    this.#fields = Object.keys(this.config[this.formSelector]);
+    this.#formSelector = Object.keys(this.#config)[ 0 ];
+    this.#fields = Object.keys(this.config[ this.formSelector ]);
   }
 
   get config() {
@@ -93,7 +95,7 @@ export class FormValidator {
   getErrors(state) {
     const errors = {};
     this.#fields.forEach((field) => {
-      errors[field] = state.getFieldErrors(field);
+      errors[ field ] = state.getFieldErrors(field);
     });
     return errors;
   }
